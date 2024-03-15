@@ -1,5 +1,7 @@
 import random
 from pydantic import BaseModel
+from pymonad.tools import curry
+from pymonad.either import Either, Left, Right
 
 
 class APP_ERROR(BaseModel):
@@ -30,31 +32,34 @@ class Ack(BaseModel):
     email: str
 
 
+@curry(1)
 def get_api_data(request: Request) -> Response | API_ERROR:
     if random.choice([True, False]):
-        print(" Success !! API data successfully retrieved")
+        print(f" Success !! {request} API data successfully retrieved")
         return Response(response="Success")
     else:
         print(" Fail !! API data FAILED")
-        return API_ERROR(error_message="API Error")
+        return Left(API_ERROR(error_message="API Error"))
 
 
+@curry(1)
 def load_db(response: Response) -> Ack | DB_ERROR:
     if random.choice([True, False]):
-        print(" Success !!  Data loaded to DB")
+        print(f" Success !!  {response} Data loaded to DB")
         return Ack(email="test@gmail.com")
     else:
         print("Fail !! DB Error")
-        return DB_ERROR(error_message="DB Error")
+        return Left(DB_ERROR(error_message="DB Error"))
 
 
+@curry(1)
 def notify(ack: Ack) -> bool | NOTIFICATION_ERROR:
     if random.choice([True, False]):
-        print(" Success !! Email notification sent")
+        print(f" Success !! {ack} Email notification sent")
         return True
     else:
         print("Fail !! Email notification sent")
-        return NOTIFICATION_ERROR(error_message="Notification error")
+        return Left(NOTIFICATION_ERROR(error_message="Notification error"))
 
 
 def process_request_non_fp(req: Request) -> bool:
@@ -74,9 +79,17 @@ def process_request_non_fp(req: Request) -> bool:
 
 
 def process_request_fp(req: Request) -> bool:
-    # (get_api_data)(load_db)(notify)(req).else(lambda x -> API_ERROR : print(Error))
-    # How to implement this in functional way
-    pass
+    result = (
+        Either.insert(req)
+        .then(get_api_data)
+        .then(load_db)
+        .then(notify)
+        .either(
+            lambda on_failure: print(f"Error: {on_failure}"),
+            lambda on_success: on_success,
+        )
+    )
+    print(result)
 
 
-process_request_non_fp(Request(req_id="MY_REQUEST"))
+process_request_fp(Request(req_id="MY_REQUEST"))
