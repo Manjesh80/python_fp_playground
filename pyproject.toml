@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "python-fp-playground"
+version = "0.1.0"
+description = ""
+authors = ["Manjesh Gowda <Manjesh.Gowda@siriusxm.com>"]
+readme = "README.md"
+packages = [{include = "python_fp_playground", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.6.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
