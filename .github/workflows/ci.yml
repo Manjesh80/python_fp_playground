@@ -16,4 +16,4 @@ jobs:
         with:
           python-version: 3.11.7
       - name: Build poetry
-        run: pip install poetry | poetry build
+        run: pip install poetry && poetry build
