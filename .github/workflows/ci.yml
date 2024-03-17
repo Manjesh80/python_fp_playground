@@ -29,7 +29,7 @@ jobs:
       - name: Dump vars
         env:
           VARS_CONTEXT: ${{ toJson(vars) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: echo "$VARS_CONTEXT"
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
