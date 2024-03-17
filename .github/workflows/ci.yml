@@ -1,10 +1,10 @@
 name: Build project
 
 on:
+  workflow_call:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
@@ -16,5 +16,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.11.7
-      - name: Build poetry
-        run: pip install poetry && poetry build
+      - name: Debug
+        run: echo "$GITHUB_CONTEXT"
+    #   - name: Build poetry
+    #     run: pip install poetry && poetry build
