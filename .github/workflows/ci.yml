@@ -22,6 +22,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: Dump Secrets
+        env:
+          GITHUB_CONTEXT: ${{ toJson(secrets) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
