@@ -23,8 +23,12 @@ jobs:
     steps:
       - name: Deploy to DEV AWS
         run: echo 'DEV Deploy'
+      - name: Prove it Dev
+        run: ${{ secrets.SHIVA_READ_THIS }}
   deploy-qa:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to QA AWS
         run: echo 'QA Deploy'
+      - name: Prove it QA
+        run: ${{ secrets.SHIVA_READ_THIS }}
