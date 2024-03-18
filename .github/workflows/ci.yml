@@ -18,3 +18,13 @@ jobs:
           python-version: 3.11.7
       - name: Build poetry
         run: pip install poetry && poetry build
+  deploy-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to DEV AWS
+        run: echo 'DEV Deploy'
+  deploy-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to QA AWS
+        run: echo 'QA Deploy'
