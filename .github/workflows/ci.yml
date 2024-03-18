@@ -7,7 +7,8 @@ on:
       - main
 
 jobs:
-  build:
+  build-job:
+    name: Build JOB
     runs-on: ubuntu-latest
     steps:
       - name: Checout code
@@ -19,14 +20,18 @@ jobs:
       - name: Build poetry
         run: pip install poetry && poetry build
   deploy-dev:
+    name: Deploy to Dev
     runs-on: ubuntu-latest
+    needs: build-job
     steps:
       - name: Deploy to DEV AWS
         run: echo 'DEV Deploy'
       - name: Prove it Dev
         run: ${{ secrets.SHIVA_READ_THIS }}
   deploy-qa:
+    name: Deploy to QA
     runs-on: ubuntu-latest
+    needs: deploy-dev
     steps:
       - name: Deploy to QA AWS
         run: echo 'QA Deploy'
