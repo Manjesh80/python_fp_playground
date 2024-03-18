@@ -27,7 +27,7 @@ jobs:
       - name: Deploy to DEV AWS
         run: echo 'DEV Deploy'
       - name: Prove it Dev
-        run: ${{ secrets.SHIVA_READ_THIS }}
+        run: ${{ vars.SHIVA_READ_THIS }}
   deploy-qa:
     name: Deploy to QA
     runs-on: ubuntu-latest
@@ -36,4 +36,4 @@ jobs:
       - name: Deploy to QA AWS
         run: echo 'QA Deploy'
       - name: Prove it QA
-        run: ${{ secrets.SHIVA_READ_THIS }}
+        run: ${{ vars.SHIVA_READ_THIS }}
